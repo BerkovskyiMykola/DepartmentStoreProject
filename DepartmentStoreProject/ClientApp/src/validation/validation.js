@@ -41,6 +41,16 @@ export const validateDescription = (t) => (value) => {
     }
 };
 
+export const validateAddress = (t) => (value) => {
+    if (value.length > 50 || value.length < 2) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                {t("The field must be between 2 and 50 characters.")}
+            </div>
+        );
+    }
+};
+
 export const validatePassword = (t) => (value) => {
     if (value.length < 8 || value.length > 18) {
         return (

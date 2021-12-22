@@ -3,10 +3,12 @@ import auth from "./auth";
 import message from "./message";
 import user from "./user";
 import profile from "./profile";
+import departmentStore from "./departmentStore";
 
 export default combineReducers({
     auth,
     message,
     user,
-    profile
+    profile,
+    departmentStore
 });

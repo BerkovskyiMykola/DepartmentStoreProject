@@ -11,6 +11,7 @@ import Profile from "./components/Profile";
 import User from "./components/User/User";
 import { Home } from "./components/Home";
 import NotFound from "./components/NotFound";
+import DepartmentStore from "./components/DepartmentStore/DepartmentStore";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -86,8 +87,8 @@ export default function App() {
                                 }
                                 {user.role === "User" &&
                                     <li className="nav-item">
-                                        <Link to={"/404"} className="nav-link">
-                                            {t("Error")}
+                                        <Link to={"/departmentStores"} className="nav-link">
+                                            {t("departmentStores")}
                                         </Link>
                                     </li>
                                 }
@@ -117,6 +118,7 @@ export default function App() {
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/users" component={User} />
                         <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/departmentStores" component={DepartmentStore} />
                         <Route exact path="/404" component={NotFound} />
                         <Route component={NotFound} />
                     </Switch>
