@@ -56,7 +56,7 @@ namespace DepartmentStoreProject.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var user = await _context.Users.Include(x => x.Role).SingleOrDefaultAsync(x => x.Email == model.Email);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == model.Email);
 
             if (user == null || user.Password != GetPasswordHash(model.Password))
             {
@@ -79,7 +79,6 @@ namespace DepartmentStoreProject.Controllers
         public async Task<IActionResult> GetUser()
         {
             var user = await _context.Users
-                .Include(x => x.Role)
                 .SingleOrDefaultAsync(x => x.Email == HttpContext.User.Identity.Name);
 
             if (user == null)
@@ -120,7 +119,6 @@ namespace DepartmentStoreProject.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return Ok(await _context.Users
-                .Include(x => x.Role)
                 .Where(x => x.Email != HttpContext.User.Identity.Name)
                 .Select(x => new { x.UserId, x.Firstname, x.Lastname, x.Email, Role = x.Role })
                 .ToListAsync());
