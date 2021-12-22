@@ -75,18 +75,18 @@ export default function Profile(props) {
                 </Row>
             </header>
             <p>
-                <strong>{t("Email")}:</strong> {profile.email}
+                <strong>{t("email")}:</strong> {profile.email}
             </p>
             <p>
-                <strong>{t("Role")}:</strong> {profile.role}
+                <strong>{t("role")}:</strong> {profile.role}
             </p>
             <ModalWindow modal={modalEdit} deactiveModal={() => { setModalEdit(false); }} textHeader={t("Edit")}
                 setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
                 textButton={t("Edit")} method={editRecord} form={form} message={message}
             >
-                <Field title={t("Lastname")} name="lastname" value={lastname}
+                <Field title={t("lastname")} name="lastname" value={lastname}
                     setValue={(e) => { setLastname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("Firstname")} name="firstname" value={firstname}
+                <Field title={t("firstname")} name="firstname" value={firstname}
                     setValue={(e) => { setFirstname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
         </div>

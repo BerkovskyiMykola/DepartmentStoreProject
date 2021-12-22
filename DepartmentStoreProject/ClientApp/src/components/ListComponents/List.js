@@ -1,14 +1,14 @@
 ﻿import React from 'react'
 import {  useTranslation } from 'react-i18next';
 import { Table, Container, Row, Col } from "reactstrap";
-import UserItem from '../UserItem/UserItem';
-import "./UserList.css";
+import ListItem from './ListItem';
 
-const UserList = ({ users, deleteUser, editUser }) => {
+
+const List = ({ recorts, columns, k, deleteRecord, editRecord }) => {
 
     const { t } = useTranslation();
 
-    if (users.length === 0) {
+    if (recorts.length === 0) {
         return (
             <Container style={{ backgroundColor: "#F2F2F2" }}>
                 <Row className="text-center">
@@ -19,22 +19,21 @@ const UserList = ({ users, deleteUser, editUser }) => {
     }
 
     return (
-        <Table bordered>
+        <Table style={{ marginTop: '5px' }} bordered>
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>{t("Firstname")}</th>
-                    <th>{t("Lastname")}</th>
-                    <th>{t("Email")}</th>
-                    <th>{t("Role")}</th>
+                    {columns.map((x, index) =>
+                        <th key={index}>{t(x)}</th>
+                    )}
                     <th>{t("Actions")}</th>
                 </tr>
             </thead>
             <tbody>
-                {users.map((item, index) => (<UserItem key={item.userId} item={item} index={index} deleteUser={deleteUser} editUser={editUser} />))}
+                {recorts.map((item, index) => (<ListItem key={item[k]} item={item} index={index} columns={columns} deleteRecord={deleteRecord} editRecord={editRecord} />))}
             </tbody>
         </Table>
     );
 };
 
-export default UserList;
+export default List;

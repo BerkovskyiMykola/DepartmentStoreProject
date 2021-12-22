@@ -5,9 +5,9 @@ import { Container, Row, Button, Col } from "reactstrap";
 import { validateEmail, validateField, validatePassword, validateRequired } from '../../validation/validation';
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
+import List from '../ListComponents/List'
 import { Redirect } from 'react-router-dom';
 import { createUser, deleteUser, editUser, getUsers } from '../../actions/user';
-import UserList from './UserList/UserList';
 import { clearMessage } from '../../actions/message';
 import datebaseService from '../../services/datebase.service';
 import {  useTranslation } from 'react-i18next';
@@ -67,13 +67,14 @@ const User = (props) => {
             .catch(() => { })
     }
 
-    const deleteRecord = (id) => {
-        dispatch(deleteUser(id))
+    const deleteRecord = (item) => {
+        dispatch(deleteUser(item.userId))
             .then(() => { })
             .catch(() => { })
     }
 
-    const getUserValues = (firstname, lastname, email, role, userId) => {
+    const getUserValues = (item) => {
+        const { firstname, lastname, email, role, userId } = item;
         setFirstName(firstname);
         setLastName(lastname);
         setEmail(email);
@@ -113,22 +114,23 @@ const User = (props) => {
                     </Col>
                 </Row>
             </Container>
-            <UserList users={users} deleteUser={deleteRecord} editUser={getUserValues}/>
+
+            <List recorts={users} k="userId" columns={['firstname', 'lastname', 'email', 'role']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
                 textButton={t("Create")} method={createRecord} form={form} message={message}
             >
-                <Field title={t("Email")} name="email" value={email}
+                <Field title={t("email")} name="email" value={email}
                     setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
-                <Field title={t("Firsname")} name="firstname" value={firstName}
+                <Field title={t("firsname")} name="firstname" value={firstName}
                     setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("Lastname")} name="lastname" value={lastName}
+                <Field title={t("lastname")} name="lastname" value={lastName}
                     setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("Password")} name="password" value={password}
+                <Field title={t("password")} name="password" value={password}
                     setValue={(e) => { setPassword(e.target.value) }} validations={[validateRequired(t), validatePassword(t)]} />
                 <div className="form-group">
-                    <label htmlFor="role">{t("Role")}</label>
+                    <label htmlFor="role">{t("role")}</label>
                     <Select className="form-control" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
                         <option value='User'>User</option>
                         <option value='Admin'>Admin</option>
@@ -140,13 +142,13 @@ const User = (props) => {
                 setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
                 method={editRecord} message={message} form={form} textButton={t("Edit")}
             >
-                <p>{t("Email")}: {email}</p>
-                <Field title={t("Firsname")} name="firstname" value={firstName}
+                <p>{t("email")}: {email}</p>
+                <Field title={t("firsname")} name="firstname" value={firstName}
                     setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("Lastname")} name="lastname" value={lastName}
+                <Field title={t("lastname")} name="lastname" value={lastName}
                     setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
                 <div className="form-group">
-                    <label htmlFor="role">{t("Role")}</label>
+                    <label htmlFor="role">{t("role")}</label>
                     <Select className="form-control" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
                         <option value='User'>User</option>
                         <option value='Admin'>Admin</option>
