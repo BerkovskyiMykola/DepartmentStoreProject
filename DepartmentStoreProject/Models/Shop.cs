@@ -9,6 +9,9 @@ namespace DepartmentStoreProject.Models
         [Required]
         [StringLength(30, MinimumLength = 2)]
         public string Name { set; get; }
+        [Required]
+        [StringLength(30, MinimumLength = 2)]
+        public string Type { set; get; }
         [Range(1, int.MaxValue)]
         public int Floor { get; set; }
 
