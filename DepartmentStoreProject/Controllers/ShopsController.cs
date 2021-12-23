@@ -89,23 +89,11 @@ namespace DepartmentStoreProject.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(shop).State = EntityState.Modified;
+            model.Name = shop.Name;
+            model.Floor = shop.Floor;
+            model.Type = shop.Type;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShopExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -125,11 +113,6 @@ namespace DepartmentStoreProject.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ShopExists(int id)
-        {
-            return _context.Shops.Any(e => e.ShopId == id);
         }
     }
 }

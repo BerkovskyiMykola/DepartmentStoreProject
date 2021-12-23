@@ -26,7 +26,7 @@ const ListItem = ({ columns, item, index, deleteRecord, editRecord, openPage }) 
                 {openPage &&
                     <button
                         onClick={() => { openPage(item) }}
-                        className="btn btn-outline-danger btn-sm float-left">
+                        className="btn btn-outline-info btn-sm float-left">
                         <i className="fa fa-folder-open-o" />
                     </button>
                 }

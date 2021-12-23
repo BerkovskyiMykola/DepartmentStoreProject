@@ -1,40 +1,47 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Button, Col } from "reactstrap";
-import { validateAddress, validateField, validateRequired } from '../../validation/validation';
+import { validateField, validateRequired } from '../../validation/validation';
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import List from '../ListComponents/List'
 import { Redirect } from 'react-router-dom';
-import { getDepartmentStores, createDepartmentStore, editDepartmentStore, deleteDepartmentStore } from '../../actions/departmentStore';
+import { createShop, deleteShop, editShop, getShops } from '../../actions/shop';
 import { clearMessage } from '../../actions/message';
 import { useTranslation } from 'react-i18next';
 
-const DepartmentStore = (props) => {
+const Shop = (props) => {
+    const id = props.match.params.id;
+
     const { t } = useTranslation();
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [departmentStoreId, setDepartmentStoreId] = useState(0);
+    const [shopId, setShopId] = useState(0);
     const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
+    const [floor, setFloor] = useState(0);
+    const [type, setType] = useState("");
     const [form, setForm] = useState(null);
     const [checkBtn, setCheckBtn] = useState(null);
 
     const dispatch = useDispatch();
 
-    const { departmentStores, message, user } = useSelector(state => ({
-        departmentStores: state.departmentStore.departmentStores,
+    const { Address, Name, shops, message, user } = useSelector(state => ({
+        Name: state.shop.name,
+        Address: state.shop.address,
+        shops: state.shop.shops,
         message: state.message.message,
         user: state.auth.user
     }), shallowEqual)
 
     useEffect(() => {
-        dispatch(getDepartmentStores());
-    }, [dispatch])
+        dispatch(getShops(id))
+            .then(() => { })
+            .catch(() => { props.history.push("/404") });
+    }, [id, dispatch, props.history])
 
     const createRecord = () => {
-        dispatch(createDepartmentStore(name, address))
+        dispatch(createShop(name, floor, type, id))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -45,12 +52,13 @@ const DepartmentStore = (props) => {
 
     const clearFields = () => {
         setName("");
-        setAddress("");
-        setDepartmentStoreId(0);
+        setFloor(1);
+        setType("");
+        setShopId(0);
     }
 
     const editRecord = () => {
-        dispatch(editDepartmentStore(departmentStoreId, name, address))
+        dispatch(editShop(shopId, name, floor, type))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -60,20 +68,17 @@ const DepartmentStore = (props) => {
     }
 
     const deleteRecord = (item) => {
-        dispatch(deleteDepartmentStore(item.departmentStoreId))
+        dispatch(deleteShop(item.shopId))
             .then(() => { })
             .catch(() => { })
     }
 
-    const openPage = (item) => {
-        props.history.push("/shops/" + item.departmentStoreId);
-    }
-
     const getUserValues = (item) => {
-        const { departmentStoreId, name, address } = item;
-        setAddress(address);
-        setDepartmentStoreId(departmentStoreId);
+        const { shopId, name, floor, type } = item;
         setName(name);
+        setFloor(floor);
+        setType(type);
+        setShopId(shopId);
         dispatch(clearMessage());
         setModalEdit(true);
     }
@@ -87,19 +92,33 @@ const DepartmentStore = (props) => {
 
     return (
         <Container>
-            <Container>
+            <header className="jumbotron">
                 <Row>
-                    <Col className="text-left"><h3>{t("departmentStores")}</h3></Col>
+                    <Col className="text-left">
+                        <h3>
+                            <strong>{t("name")}: {Name}</strong>
+                        </h3>
+                        <h3>
+                            <strong>{t("address")}: {Address}</strong>
+                        </h3>
+                    </Col>
                     <Col className="text-right">
-                        <Button onClick={() => { clearFields(); setModalAdd(true); }} color="success">{t("Create")}</Button>
-                        <Button onClick={() => { dispatch(getDepartmentStores()); }}>
+                        <Button onClick={() => { dispatch(getShops(id)); }}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
                     </Col>
                 </Row>
+            </header>
+            <Container>
+                <Row>
+                    <Col className="text-left"><h3>{t("shops")}</h3></Col>
+                    <Col className="text-right">
+                        <Button onClick={() => { clearFields(); setModalAdd(true); }} color="success">{t("Create")}</Button>
+                    </Col>
+                </Row>
             </Container>
 
-            <List recorts={departmentStores} k="departmentStoreId" columns={['name', 'address']} deleteRecord={deleteRecord} editRecord={getUserValues} openPage={openPage}/>
+            <List recorts={shops} k="shopId" columns={['name', 'floor', 'type']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
@@ -107,8 +126,10 @@ const DepartmentStore = (props) => {
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("address")} name="address" value={address}
-                    setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
+                <Field title={t("floor")} name="floor" value={floor}
+                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
+                <Field title={t("type")} name="type" value={type}
+                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
@@ -117,11 +138,13 @@ const DepartmentStore = (props) => {
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("address")} name="address" value={address}
-                    setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
+                <Field title={t("floor")} name="floor" value={floor}
+                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
+                <Field title={t("type")} name="type" value={type}
+                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
         </Container>
     );
 };
 
-export default DepartmentStore;
+export default Shop;

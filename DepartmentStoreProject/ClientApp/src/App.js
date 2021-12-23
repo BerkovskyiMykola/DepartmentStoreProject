@@ -12,6 +12,7 @@ import User from "./components/User/User";
 import { Home } from "./components/Home";
 import NotFound from "./components/NotFound";
 import DepartmentStore from "./components/DepartmentStore/DepartmentStore";
+import Shop from "./components/Shop/Shop";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -119,6 +120,7 @@ export default function App() {
                         <Route exact path="/users" component={User} />
                         <Route exact path="/profile" component={Profile} />
                         <Route exact path="/departmentStores" component={DepartmentStore} />
+                        <Route exact path="/shops/:id" component={Shop} />
                         <Route exact path="/404" component={NotFound} />
                         <Route component={NotFound} />
                     </Switch>
