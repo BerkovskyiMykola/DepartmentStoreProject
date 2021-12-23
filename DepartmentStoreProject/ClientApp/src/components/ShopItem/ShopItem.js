@@ -6,42 +6,43 @@ import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import List from '../ListComponents/List'
 import { Redirect } from 'react-router-dom';
-import { createShop, deleteShop, editShop, getShops } from '../../actions/shop';
+import { createShopItem, deleteShopItem, editShopItem, getShopItems } from '../../actions/shopItem';
 import { clearMessage } from '../../actions/message';
 import { useTranslation } from 'react-i18next';
 
-const Shop = (props) => {
+const ShopItem = (props) => {
     const id = props.match.params.id;
 
     const { t } = useTranslation();
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [shopId, setShopId] = useState(0);
+    const [shopItemId, setShopItemId] = useState(0);
     const [name, setName] = useState("");
-    const [floor, setFloor] = useState(0);
-    const [type, setType] = useState("");
+    const [price, setPrice] = useState(1);
+    const [amount, setAmount] = useState(1);
     const [form, setForm] = useState(null);
     const [checkBtn, setCheckBtn] = useState(null);
 
     const dispatch = useDispatch();
 
-    const { Address, Name, shops, message, user } = useSelector(state => ({
-        Name: state.shop.name,
-        Address: state.shop.address,
-        shops: state.shop.shops,
+    const { type, floor, Name, shopItems, message, user } = useSelector(state => ({
+        Name: state.shopItem.name,
+        floor: state.shopItem.floor,
+        type: state.shopItem.type,
+        shopItems: state.shopItem.shopItems,
         message: state.message.message,
         user: state.auth.user
     }), shallowEqual)
 
     useEffect(() => {
-        dispatch(getShops(id))
+        dispatch(getShopItems(id))
             .then(() => { })
             .catch(() => { props.history.push("/404") });
     }, [id, dispatch, props.history])
 
     const createRecord = () => {
-        dispatch(createShop(name, floor, type, id))
+        dispatch(createShopItem(name, price, amount, id))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -52,13 +53,13 @@ const Shop = (props) => {
 
     const clearFields = () => {
         setName("");
-        setFloor(1);
-        setType("");
-        setShopId(0);
+        setPrice(1);
+        setAmount(1);
+        setShopItemId(0);
     }
 
     const editRecord = () => {
-        dispatch(editShop(shopId, name, floor, type))
+        dispatch(editShopItem(shopItemId, name, price, amount))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -68,23 +69,19 @@ const Shop = (props) => {
     }
 
     const deleteRecord = (item) => {
-        dispatch(deleteShop(item.shopId))
+        dispatch(deleteShopItem(item.shopItemId))
             .then(() => { })
             .catch(() => { })
     }
 
     const getUserValues = (item) => {
-        const { shopId, name, floor, type } = item;
+        const { shopItemId, name, price, amount } = item;
+        setShopItemId(shopItemId);
         setName(name);
-        setFloor(floor);
-        setType(type);
-        setShopId(shopId);
+        setPrice(price);
+        setAmount(amount);
         dispatch(clearMessage());
         setModalEdit(true);
-    }
-
-    const openPage = (item) => {
-        props.history.push("/shopItems/" + item.shopId);
     }
 
     if (!user) {
@@ -103,11 +100,14 @@ const Shop = (props) => {
                             <strong>{t("name")}: {Name}</strong>
                         </h3>
                         <h3>
-                            <strong>{t("address")}: {Address}</strong>
+                            <strong>{t("floor")}: {floor}</strong>
+                        </h3>
+                        <h3>
+                            <strong>{t("type")}: {type}</strong>
                         </h3>
                     </Col>
                     <Col className="text-right">
-                        <Button onClick={() => { dispatch(getShops(id)); }}>
+                        <Button onClick={() => { dispatch(getShopItems(id)); }}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
                     </Col>
@@ -115,14 +115,14 @@ const Shop = (props) => {
             </header>
             <Container>
                 <Row>
-                    <Col className="text-left"><h3>{t("shops")}</h3></Col>
+                    <Col className="text-left"><h3>{t("shopItems")}</h3></Col>
                     <Col className="text-right">
                         <Button onClick={() => { clearFields(); setModalAdd(true); }} color="success">{t("Create")}</Button>
                     </Col>
                 </Row>
             </Container>
 
-            <List recorts={shops} k="shopId" columns={['name', 'floor', 'type']} deleteRecord={deleteRecord} editRecord={getUserValues} openPage={openPage}/>
+            <List recorts={shopItems} k="shopItemId" columns={['name', 'price', 'amount']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
@@ -130,10 +130,10 @@ const Shop = (props) => {
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("floor")} name="floor" value={floor}
-                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
-                <Field title={t("type")} name="type" value={type}
-                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field title={t("price")} name="price" value={price}
+                    setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
+                <Field title={t("amount")} name="amount" value={amount}
+                    setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
@@ -142,13 +142,13 @@ const Shop = (props) => {
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("floor")} name="floor" value={floor}
-                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
-                <Field title={t("type")} name="type" value={type}
-                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field title={t("price")} name="price" value={price}
+                    setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
+                <Field title={t("amount")} name="amount" value={amount}
+                    setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
             </ModalWindow>
         </Container>
     );
 };
 
-export default Shop;
+export default ShopItem;
