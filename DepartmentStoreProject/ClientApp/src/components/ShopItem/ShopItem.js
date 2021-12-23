@@ -84,6 +84,10 @@ const ShopItem = (props) => {
         setModalEdit(true);
     }
 
+    const openHistory = () => {
+        props.history.push("/histories/" + id);
+    }
+
     if (!user) {
         return <Redirect to="/login" />;
     }
@@ -93,7 +97,7 @@ const ShopItem = (props) => {
 
     return (
         <Container>
-            <header className="jumbotron">
+            <header className="jumbotron bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>
@@ -107,6 +111,7 @@ const ShopItem = (props) => {
                         </h3>
                     </Col>
                     <Col className="text-right">
+                        <Button onClick={() => { openHistory(); }} color="success">{t("OpenHistory")}</Button>
                         <Button onClick={() => { dispatch(getShopItems(id)); }}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </Button>

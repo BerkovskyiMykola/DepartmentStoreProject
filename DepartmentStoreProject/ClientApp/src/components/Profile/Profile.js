@@ -48,7 +48,7 @@ export default function Profile(props) {
 
     if (profile === null) {
         return (
-            <div className="container">
+            <div className="jumbotron bg-dark text-white">
                 <header className="jumbotron">
                     <h3>
                         <strong>{t("Profile")}: </strong>
@@ -60,7 +60,7 @@ export default function Profile(props) {
 
     return (
         <div className="container">
-            <header className="jumbotron">
+            <header className="jumbotron bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>

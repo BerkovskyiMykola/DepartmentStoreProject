@@ -96,7 +96,7 @@ const Shop = (props) => {
 
     return (
         <Container>
-            <header className="jumbotron">
+            <header className="jumbotron bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>

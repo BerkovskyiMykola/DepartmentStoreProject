@@ -6,6 +6,7 @@ import profile from "./profile";
 import departmentStore from "./departmentStore";
 import shop from "./shop";
 import shopItem from "./shopItem";
+import history from "./history";
 
 export default combineReducers({
     auth,
@@ -14,5 +15,6 @@ export default combineReducers({
     profile,
     departmentStore,
     shop,
-    shopItem
+    shopItem,
+    history
 });

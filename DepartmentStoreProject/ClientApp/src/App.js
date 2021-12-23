@@ -14,6 +14,7 @@ import NotFound from "./components/NotFound";
 import DepartmentStore from "./components/DepartmentStore/DepartmentStore";
 import Shop from "./components/Shop/Shop";
 import ShopItem from "./components/ShopItem/ShopItem";
+import History from "./components/History/History";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -50,7 +51,7 @@ export default function App() {
     return (
         <Router history={history}>
             <div>
-                <nav className="navbar navbar-expand navbar-dark bg-primary">
+                <nav className="navbar navbar-expand navbar-dark bg-dark">
                     <Link to={"/"} className="navbar-brand">
                         DepartmentStoreProject
                     </Link>
@@ -123,6 +124,7 @@ export default function App() {
                         <Route exact path="/departmentStores" component={DepartmentStore} />
                         <Route exact path="/shops/:id" component={Shop} />
                         <Route exact path="/shopItems/:id" component={ShopItem} />
+                        <Route exact path="/histories/:id" component={History} />
                         <Route exact path="/404" component={NotFound} />
                         <Route component={NotFound} />
                     </Switch>
