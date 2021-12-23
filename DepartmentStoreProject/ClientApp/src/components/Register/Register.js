@@ -5,7 +5,6 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { register } from "../../actions/auth";
 
-import profileImg from "../../img/avatar.png"
 import { validateRequired, validateEmail, validateField, validatePassword } from "../../validation/validation";
 import { Field, Form } from "../FormComponents";
 
@@ -47,11 +46,6 @@ export default function Register(props) {
     return (
         <div className="col-md-12">
             <div className="card card-container">
-                <img
-                    src={profileImg}
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
                 <Form handleSubmit={handleRegister} setForm={(c) => { setForm(c); }}
                     message={message} setCheckBtn={(c) => { setCheckBtn(c); }} >
                     <div>
