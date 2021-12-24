@@ -8,7 +8,7 @@ import { editUser, getUser } from "../../actions/profile";
 import { validateField, validateRequired } from "../../validation/validation";
 import { Field } from "../FormComponents";
 import ModalWindow from "../ModalWindow/ModalWindow";
-import { Row, Button, Col } from "reactstrap";
+import { Row, Button, Col, Container, Jumbotron } from "reactstrap";
 
 export default function Profile(props) {
     const { t } = useTranslation();
@@ -47,8 +47,8 @@ export default function Profile(props) {
     }
 
     return (
-        <div className="container">
-            <header className="jumbotron bg-dark text-white">
+        <Container>
+            <Jumbotron className="bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>
@@ -61,7 +61,7 @@ export default function Profile(props) {
                         </Button>
                     </Col>
                 </Row>
-            </header>
+            </Jumbotron>
             <p>
                 <strong>{t("email")}:</strong> {profile.email}
             </p>
@@ -77,6 +77,6 @@ export default function Profile(props) {
                 <Field title={t("firstname")} name="firstname" value={firstname}
                     setValue={(e) => { setFirstname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
-        </div>
+        </Container>
     );
 }

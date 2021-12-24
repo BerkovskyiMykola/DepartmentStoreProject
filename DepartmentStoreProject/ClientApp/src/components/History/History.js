@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Button, Col } from "reactstrap";
+import { Container, Row, Button, Col, Jumbotron } from "reactstrap";
 import List from '../ListComponents/List'
 import { Redirect } from 'react-router-dom';
 import { getHistories, createHistory } from '../../actions/history';
@@ -45,7 +45,7 @@ const History = (props) => {
 
     return (
         <Container>
-            <header className="jumbotron bg-dark text-white">
+            <Jumbotron className="bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>
@@ -64,7 +64,7 @@ const History = (props) => {
                         </Button>
                     </Col>
                 </Row>
-            </header>
+            </Jumbotron>
             <Container>
                 <Row>
                     <Col className="text-left"><h3>{t("histories")}</h3></Col>

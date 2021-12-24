@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Button, Col } from "reactstrap";
+import { Container, Row, Button, Col, Jumbotron } from "reactstrap";
 import { validateField, validateRequired } from '../../validation/validation';
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
@@ -96,7 +96,7 @@ const Shop = (props) => {
 
     return (
         <Container>
-            <header className="jumbotron bg-dark text-white">
+            <Jumbotron className="bg-dark text-white">
                 <Row>
                     <Col className="text-left">
                         <h3>
@@ -112,7 +112,7 @@ const Shop = (props) => {
                         </Button>
                     </Col>
                 </Row>
-            </header>
+            </Jumbotron>
             <Container>
                 <Row>
                     <Col className="text-left"><h3>{t("shops")}</h3></Col>
