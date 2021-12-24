@@ -102,18 +102,18 @@ const DepartmentStore = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field title={t("name")} name="name" value={name}
+                <Field name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("address")} name="address" value={address}
+                <Field name="address" value={address}
                     setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <Field title={t("name")} name="name" value={name}
+                <Field name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("address")} name="address" value={address}
+                <Field name="address" value={address}
                     setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
             </ModalWindow>
         </Container>

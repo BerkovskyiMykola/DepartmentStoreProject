@@ -69,9 +69,9 @@ export default function Profile(props) {
             <ModalWindow modal={modalEdit} deactiveModal={() => { setModalEdit(false); }} textHeader={t("Edit")}
                 textButton={t("Edit")} method={editRecord} message={message}
             >
-                <Field title={t("lastname")} name="lastname" value={lastname}
+                <Field name="lastname" value={lastname}
                     setValue={(e) => { setLastname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("firstname")} name="firstname" value={firstname}
+                <Field name="firstname" value={firstname}
                     setValue={(e) => { setFirstname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
         </Container>

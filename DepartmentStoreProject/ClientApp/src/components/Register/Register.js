@@ -49,13 +49,13 @@ export default function Register(props) {
                 <Form handleSubmit={handleRegister} setForm={(c) => { setForm(c); }}
                     message={message} setCheckBtn={(c) => { setCheckBtn(c); }} >
                     <div>
-                        <Field title={t("email")} name="email" value={email}
+                        <Field name="email" value={email}
                             setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
-                        <Field title={t("firstname")} name="firstname" value={firstname}
+                        <Field name="firstname" value={firstname}
                             setValue={(e) => { setFirstname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                        <Field title={t("lastname")} name="lastname" value={lastname}
+                        <Field name="lastname" value={lastname}
                             setValue={(e) => { setLastname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                        <Field title={t("password")} name="password" value={password}
+                        <Field name="password" value={password}
                             setValue={(e) => { setPassword(e.target.value) }} validations={[validateRequired(t), validatePassword(t)]} />
 
                         <div className="form-group">

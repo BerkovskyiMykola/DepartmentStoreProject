@@ -1,11 +1,14 @@
 ﻿import React from 'react';
 import Input from "react-validation/build/input";
+import { useTranslation } from "react-i18next";
 
-const Field = ({ title, name, value, setValue, validations, type = "text", min }) => {
+const Field = ({ name, value, setValue, validations, type = "text", min }) => {
+
+    const { t } = useTranslation();
 
     return (
         <div className="form-group">
-            <label htmlFor={name}>{title}</label>
+            <label htmlFor={name}>{t(name)}</label>
             <Input
                 type={type}
                 className="form-control"

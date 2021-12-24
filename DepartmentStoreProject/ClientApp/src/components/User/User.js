@@ -118,13 +118,13 @@ const User = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field title={t("email")} name="email" value={email}
+                <Field name="email" value={email}
                     setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
-                <Field title={t("firsname")} name="firstname" value={firstName}
+                <Field name="firstname" value={firstName}
                     setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("lastname")} name="lastname" value={lastName}
+                <Field name="lastname" value={lastName}
                     setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("password")} name="password" value={password}
+                <Field name="password" value={password}
                     setValue={(e) => { setPassword(e.target.value) }} validations={[validateRequired(t), validatePassword(t)]} />
                 <div className="form-group">
                     <label htmlFor="role">{t("role")}</label>
@@ -139,9 +139,9 @@ const User = (props) => {
                 method={editRecord} message={message} textButton={t("Edit")}
             >
                 <p>{t("email")}: {email}</p>
-                <Field title={t("firsname")} name="firstname" value={firstName}
+                <Field name="firstname" value={firstName}
                     setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("lastname")} name="lastname" value={lastName}
+                <Field name="lastname" value={lastName}
                     setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
                 <div className="form-group">
                     <label htmlFor="role">{t("role")}</label>

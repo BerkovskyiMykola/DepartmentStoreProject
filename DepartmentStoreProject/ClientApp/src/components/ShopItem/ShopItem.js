@@ -130,22 +130,22 @@ const ShopItem = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field title={t("name")} name="name" value={name}
+                <Field name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("price")} name="price" value={price}
+                <Field name="price" value={price}
                     setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
-                <Field title={t("amount")} name="amount" value={amount}
+                <Field name="amount" value={amount}
                     setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <Field title={t("name")} name="name" value={name}
+                <Field name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field title={t("price")} name="price" value={price}
+                <Field name="price" value={price}
                     setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
-                <Field title={t("amount")} name="amount" value={amount}
+                <Field name="amount" value={amount}
                     setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
             </ModalWindow>
         </Container>
