@@ -9,14 +9,14 @@ import List from '../ListComponents/List'
 import { createUser, deleteUser, editUser, getUsers } from '../../actions/user';
 import { clearMessage } from '../../actions/message';
 import datebaseService from '../../services/datebase.service';
-import {  useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const User = (props) => {
     const { t } = useTranslation();
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [model, setModel] = useState({ userId: 0, firstName: "", lastName: "", email: "", password: "", role: "User" });
+    const [model, setModel] = useState({ userId: 0, firstname: "", lastname: "", email: "", password: "", role: "User" });
 
     const dispatch = useDispatch();
 
@@ -30,7 +30,7 @@ const User = (props) => {
     }, [dispatch])
 
     const createRecord = () => {
-        dispatch(createUser(model.lastName, model.firstName, model.role, model.email, model.password))
+        dispatch(createUser(model.lastname, model.firstname, model.role, model.email, model.password))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -40,11 +40,11 @@ const User = (props) => {
     }
 
     const clearFields = () => {
-        setModel({ userId: 0, firstName: "", lastName: "", email: "", password: "", role: "User" });
+        setModel({ userId: 0, firstname: "", lastname: "", email: "", password: "", role: "User" });
     }
 
     const editRecord = () => {
-        dispatch(editUser(model.userId, model.lastName, model.firstName, model.role))
+        dispatch(editUser(model.userId, model.lastname, model.firstname, model.role))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -81,7 +81,7 @@ const User = (props) => {
                     <Col className="text-right">
                         <Button onClick={createBackup} color="info">{t("CreateBackup")}</Button>
                         <Button onClick={restoreDatabase} color="warning">{t("RestoreDatabase")}</Button>
-                        <Button onClick={() => setModalAdd(true)} color="success">{t("Create")}</Button>
+                        <Button onClick={() => { clearFields(); setModalAdd(true) }} color="success">{t("Create")}</Button>
                         <Button onClick={() => { dispatch(getUsers()); }}>
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
@@ -89,12 +89,12 @@ const User = (props) => {
                 </Row>
             </Container>
 
-            <List recorts={users} k="userId" columns={['firstname', 'lastname', 'email', 'role']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
+            <List recorts={users} k="userId" columns={['firstname', 'lastname', 'email', 'role']} deleteRecord={deleteRecord} editRecord={getUserValues} />
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field name="email" value={model.email}
+                <Field name="email" value={model}
                     setValue={(e) => { setModel({ ...model, "email": e.target.value }) }} validations={[validateRequired(t), validateEmail(t)]} />
                 <Field name="firstname" value={model}
                     setValue={(e) => { setModel({ ...model, "firstname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
