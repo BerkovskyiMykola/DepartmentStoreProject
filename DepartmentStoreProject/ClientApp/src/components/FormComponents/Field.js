@@ -13,7 +13,7 @@ const Field = ({ name, value, setValue, validations, type = "text", min }) => {
                 type={type}
                 className="form-control"
                 name={name}
-                value={value}
+                value={value[name]}
                 min={min}
                 onChange={setValue}
                 validations={validations}

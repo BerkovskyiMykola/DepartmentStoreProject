@@ -17,10 +17,7 @@ const ShopItem = (props) => {
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [shopItemId, setShopItemId] = useState(0);
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState(1);
-    const [amount, setAmount] = useState(1);
+    const [model, setModel] = useState({ shopItemId: 0, name: "", price: 1, amount: 1 });
 
     const dispatch = useDispatch();
 
@@ -40,7 +37,7 @@ const ShopItem = (props) => {
     }, [id, dispatch, props.history])
 
     const createRecord = () => {
-        dispatch(createShopItem(name, price, amount, id))
+        dispatch(createShopItem(model.name, model.price, model.amount, id))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -50,14 +47,11 @@ const ShopItem = (props) => {
     }
 
     const clearFields = () => {
-        setName("");
-        setPrice(1);
-        setAmount(1);
-        setShopItemId(0);
+        setModel({ shopItemId: 0, name: "", price: 1, amount: 1 });
     }
 
     const editRecord = () => {
-        dispatch(editShopItem(shopItemId, name, price, amount))
+        dispatch(editShopItem(model.shopItemId, model.name, model.price, model.amount))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -73,11 +67,7 @@ const ShopItem = (props) => {
     }
 
     const getUserValues = (item) => {
-        const { shopItemId, name, price, amount } = item;
-        setShopItemId(shopItemId);
-        setName(name);
-        setPrice(price);
-        setAmount(amount);
+        setModel(item);
         dispatch(clearMessage());
         setModalEdit(true);
     }
@@ -130,23 +120,23 @@ const ShopItem = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="price" value={price}
-                    setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
-                <Field name="amount" value={amount}
-                    setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="price" value={model}
+                    setValue={(e) => { setModel({ ...model, "price": e.target.value }) }} type="number" min={1} />
+                <Field name="amount" value={model}
+                    setValue={(e) => { setModel({ ...model, "amount": e.target.value }) }} type="number" min={1} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="price" value={price}
-                    setValue={(e) => { setPrice(e.target.value) }} type="number" min={1} />
-                <Field name="amount" value={amount}
-                    setValue={(e) => { setAmount(e.target.value) }} type="number" min={1} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="price" value={model}
+                    setValue={(e) => { setModel({ ...model, "price": e.target.value }) }} type="number" min={1} />
+                <Field name="amount" value={model}
+                    setValue={(e) => { setModel({ ...model, "amount": e.target.value }) }} type="number" min={1} />
             </ModalWindow>
         </Container>
     );

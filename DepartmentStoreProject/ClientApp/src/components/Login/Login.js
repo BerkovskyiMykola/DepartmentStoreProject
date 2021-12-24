@@ -11,8 +11,7 @@ import { Field, Form } from "../FormComponents";
 export default function Login(props) {
 
     const { t } = useTranslation();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [model, setModel] = useState({ email: "", password: ""});
     const [form, setForm] = useState(null);
     const [checkBtn, setCheckBtn] = useState(null);
 
@@ -29,11 +28,12 @@ export default function Login(props) {
         form.validateAll();
 
         if (checkBtn.context._errors.length === 0) {
-            dispatch(login(email, password))
+            dispatch(login(model.email, model.password))
                 .then(() => {  })
                 .catch(() => {  });
         }
     }
+
     if (isLoggedIn) {
         return <Redirect to="/profile" />;
     }
@@ -41,13 +41,13 @@ export default function Login(props) {
     return (
         <div className="col-md-12">
             <div className="card card-container">
-                <Form handleSubmit={handleLogin} setForm={(c) => { setForm(c); }}
-                    message={message} setCheckBtn={(c) => { setCheckBtn(c); }} >
+                <Form handleSubmit={handleLogin} setForm={setForm}
+                    message={message} setCheckBtn={setCheckBtn} >
                     <div>
-                        <Field name="email" value={email}
-                            setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
-                        <Field name="password" value={password}
-                            setValue={(e) => { setPassword(e.target.value) }} validations={[validateRequired(t), validatePassword(t)]} />
+                        <Field name="email" value={model}
+                            setValue={(e) => { setModel({ ...model, "email": e.target.value }) }} validations={[validateRequired(t), validateEmail(t)]} />
+                        <Field name="password" value={model}
+                            setValue={(e) => { setModel({ ...model, "password": e.target.value}) }} validations={[validateRequired(t), validatePassword(t)]} />
 
                         <div className="form-group">
                             <button className="btn btn-primary btn-block">{t("Login")}</button>

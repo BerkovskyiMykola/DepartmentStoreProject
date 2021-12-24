@@ -17,12 +17,7 @@ const User = (props) => {
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [userId, setUserId] = useState(0);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [role, setRole] = useState("User");
+    const [model, setModel] = useState({ userId: 0, firstName: "", lastName: "", email: "", password: "", role: "User" });
 
     const dispatch = useDispatch();
 
@@ -37,7 +32,7 @@ const User = (props) => {
     }, [dispatch])
 
     const createRecord = () => {
-        dispatch(createUser(lastName, firstName, role, email, password))
+        dispatch(createUser(model.lastName, model.firstName, model.role, model.email, model.password))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -47,16 +42,11 @@ const User = (props) => {
     }
 
     const clearFields = () => {
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
-        setRole("User");
-        setUserId(0);
+        setModel({ userId: 0, firstName: "", lastName: "", email: "", password: "", role: "User" });
     }
 
     const editRecord = () => {
-        dispatch(editUser(userId, lastName, firstName, role))
+        dispatch(editUser(model.userId, model.lastName, model.firstName, model.role))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -72,12 +62,7 @@ const User = (props) => {
     }
 
     const getUserValues = (item) => {
-        const { firstname, lastname, email, role, userId } = item;
-        setFirstName(firstname);
-        setLastName(lastname);
-        setEmail(email);
-        setRole(role);
-        setUserId(userId);
+        setModel(item);
         dispatch(clearMessage());
         setModalEdit(true);
     }
@@ -118,17 +103,17 @@ const User = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field name="email" value={email}
-                    setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
-                <Field name="firstname" value={firstName}
-                    setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="lastname" value={lastName}
-                    setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="password" value={password}
-                    setValue={(e) => { setPassword(e.target.value) }} validations={[validateRequired(t), validatePassword(t)]} />
+                <Field name="email" value={model.email}
+                    setValue={(e) => { setModel({ ...model, "email": e.target.value }) }} validations={[validateRequired(t), validateEmail(t)]} />
+                <Field name="firstname" value={model}
+                    setValue={(e) => { setModel({ ...model, "firstname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="lastname" value={model}
+                    setValue={(e) => { setModel({ ...model, "lastname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="password" value={model}
+                    setValue={(e) => { setModel({ ...model, "password": e.target.value }) }} validations={[validateRequired(t), validatePassword(t)]} />
                 <div className="form-group">
                     <label htmlFor="role">{t("role")}</label>
-                    <Select className="form-control" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                    <Select className="form-control" name="role" value={model.role} onChange={(e) => setModel({ ...model, "role": e.target.value })}>
                         <option value='User'>User</option>
                         <option value='Admin'>Admin</option>
                     </Select>
@@ -138,14 +123,14 @@ const User = (props) => {
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <p>{t("email")}: {email}</p>
-                <Field name="firstname" value={firstName}
-                    setValue={(e) => { setFirstName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="lastname" value={lastName}
-                    setValue={(e) => { setLastName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <p>{t("email")}: {model.email}</p>
+                <Field name="firstname" value={model}
+                    setValue={(e) => { setModel({ ...model, "firstname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="lastname" value={model}
+                    setValue={(e) => { setModel({ ...model, "lastname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
                 <div className="form-group">
                     <label htmlFor="role">{t("role")}</label>
-                    <Select className="form-control" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                    <Select className="form-control" name="role" value={model.role} onChange={(e) => setModel({ ...model, "role": e.target.value })}>
                         <option value='User'>User</option>
                         <option value='Admin'>Admin</option>
                     </Select>

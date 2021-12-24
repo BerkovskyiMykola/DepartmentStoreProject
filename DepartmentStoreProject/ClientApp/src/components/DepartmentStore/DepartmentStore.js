@@ -15,9 +15,7 @@ const DepartmentStore = (props) => {
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [departmentStoreId, setDepartmentStoreId] = useState(0);
-    const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
+    const [model, setModel] = useState({ departmentStoreId: 0, name: "", address: "" });
 
     const dispatch = useDispatch();
 
@@ -32,7 +30,7 @@ const DepartmentStore = (props) => {
     }, [dispatch])
 
     const createRecord = () => {
-        dispatch(createDepartmentStore(name, address))
+        dispatch(createDepartmentStore(model.name, model.address))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -42,13 +40,11 @@ const DepartmentStore = (props) => {
     }
 
     const clearFields = () => {
-        setName("");
-        setAddress("");
-        setDepartmentStoreId(0);
+        setModel({ departmentStoreId: 0, name: "", address: "" });
     }
 
     const editRecord = () => {
-        dispatch(editDepartmentStore(departmentStoreId, name, address))
+        dispatch(editDepartmentStore(model.departmentStoreId, model.name, model.address))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -68,10 +64,7 @@ const DepartmentStore = (props) => {
     }
 
     const getUserValues = (item) => {
-        const { departmentStoreId, name, address } = item;
-        setAddress(address);
-        setDepartmentStoreId(departmentStoreId);
-        setName(name);
+        setModel(item);
         dispatch(clearMessage());
         setModalEdit(true);
     }
@@ -102,19 +95,19 @@ const DepartmentStore = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="address" value={address}
-                    setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="address" value={model}
+                    setValue={(e) => { setModel({ ...model, "address": e.target.value }) }} validations={[validateRequired(t), validateAddress(t)]} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="address" value={address}
-                    setValue={(e) => { setAddress(e.target.value) }} validations={[validateRequired(t), validateAddress(t)]} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="address" value={model}
+                    setValue={(e) => { setModel({ ...model, "address": e.target.value }) }} validations={[validateRequired(t), validateAddress(t)]} />
             </ModalWindow>
         </Container>
     );

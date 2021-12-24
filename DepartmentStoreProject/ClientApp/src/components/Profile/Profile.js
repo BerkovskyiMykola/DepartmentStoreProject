@@ -16,8 +16,7 @@ export default function Profile(props) {
 
     const [modalEdit, setModalEdit] = useState(false);
 
-    const [lastname, setLastname] = useState("");
-    const [firstname, setFirstname] = useState("");
+    const [model, setModel] = useState({ lastname: "", firstname: "" });
 
     const { profile, user, message } = useSelector(state => ({
         profile: state.profile.profile,
@@ -32,7 +31,7 @@ export default function Profile(props) {
     }, [dispatch, props.history])
 
     const editRecord = () => {
-        dispatch(editUser(user.userId, lastname, firstname))
+        dispatch(editUser(user.userId, model.lastname, model.firstname))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -54,7 +53,7 @@ export default function Profile(props) {
                         </h3>
                     </Col>
                     <Col className="text-right">
-                        <Button onClick={() => { dispatch(clearMessage()); setModalEdit(true); setLastname(profile.lastname); setFirstname(profile.firstname); }}>
+                        <Button onClick={() => { dispatch(clearMessage()); setModalEdit(true); setModel(profile); }}>
                             {t("Edit")}
                         </Button>
                     </Col>
@@ -69,10 +68,10 @@ export default function Profile(props) {
             <ModalWindow modal={modalEdit} deactiveModal={() => { setModalEdit(false); }} textHeader={t("Edit")}
                 textButton={t("Edit")} method={editRecord} message={message}
             >
-                <Field name="lastname" value={lastname}
-                    setValue={(e) => { setLastname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="firstname" value={firstname}
-                    setValue={(e) => { setFirstname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="lastname" value={model}
+                    setValue={(e) => { setModel({ ...model, "lastname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="firstname" value={model}
+                    setValue={(e) => { setModel({ ...model, "firstname": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
         </Container>
     );

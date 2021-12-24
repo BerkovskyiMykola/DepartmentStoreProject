@@ -13,13 +13,10 @@ import { useTranslation } from 'react-i18next';
 const Shop = (props) => {
     const id = props.match.params.id;
 
+    const [model, setModel] = useState({ shopId: 0, name: "", floor: 1, type: "" });
     const { t } = useTranslation();
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
-    const [shopId, setShopId] = useState(0);
-    const [name, setName] = useState("");
-    const [floor, setFloor] = useState(0);
-    const [type, setType] = useState("");
 
     const dispatch = useDispatch();
 
@@ -38,7 +35,7 @@ const Shop = (props) => {
     }, [id, dispatch, props.history])
 
     const createRecord = () => {
-        dispatch(createShop(name, floor, type, id))
+        dispatch(createShop(model.name, model.floor, model.type, id))
             .then(() => {
                 setModalAdd(false);
                 dispatch(clearMessage());
@@ -48,14 +45,11 @@ const Shop = (props) => {
     }
 
     const clearFields = () => {
-        setName("");
-        setFloor(1);
-        setType("");
-        setShopId(0);
+        setModel({ shopId: 0, name: "", floor: 1, type: "" })
     }
 
     const editRecord = () => {
-        dispatch(editShop(shopId, name, floor, type))
+        dispatch(editShop(model.shopId, model.name, model.floor, model.type))
             .then(() => {
                 setModalEdit(false);
                 dispatch(clearMessage());
@@ -71,11 +65,7 @@ const Shop = (props) => {
     }
 
     const getUserValues = (item) => {
-        const { shopId, name, floor, type } = item;
-        setName(name);
-        setFloor(floor);
-        setType(type);
-        setShopId(shopId);
+        setModel(item);
         dispatch(clearMessage());
         setModalEdit(true);
     }
@@ -124,23 +114,23 @@ const Shop = (props) => {
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
                 textButton={t("Create")} method={createRecord} message={message}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="floor" value={floor}
-                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
-                <Field name="type" value={type}
-                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="floor" value={model}
+                    setValue={(e) => { setModel({ ...model, "floor": e.target.value }) }} type="number" min={1} />
+                <Field name="type" value={model}
+                    setValue={(e) => { setModel({ ...model, "type": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
                 method={editRecord} message={message} textButton={t("Edit")}
             >
-                <Field name="name" value={name}
-                    setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
-                <Field name="floor" value={floor}
-                    setValue={(e) => { setFloor(e.target.value) }} type="number" min={1} />
-                <Field name="type" value={type}
-                    setValue={(e) => { setType(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="name" value={model}
+                    setValue={(e) => { setModel({ ...model, "name": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
+                <Field name="floor" value={model}
+                    setValue={(e) => { setModel({ ...model, "floor": e.target.value }) }} type="number" min={1} />
+                <Field name="type" value={model}
+                    setValue={(e) => { setModel({ ...model, "type": e.target.value }) }} validations={[validateRequired(t), validateField(t)]} />
             </ModalWindow>
         </Container>
     );
