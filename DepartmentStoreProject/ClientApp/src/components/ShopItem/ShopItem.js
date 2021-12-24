@@ -5,7 +5,6 @@ import { validateField, validateRequired } from '../../validation/validation';
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import List from '../ListComponents/List'
-import { Redirect } from 'react-router-dom';
 import { createShopItem, deleteShopItem, editShopItem, getShopItems } from '../../actions/shopItem';
 import { clearMessage } from '../../actions/message';
 import { useTranslation } from 'react-i18next';
@@ -21,13 +20,12 @@ const ShopItem = (props) => {
 
     const dispatch = useDispatch();
 
-    const { type, floor, Name, shopItems, message, user } = useSelector(state => ({
+    const { type, floor, Name, shopItems, message } = useSelector(state => ({
         Name: state.shopItem.name,
         floor: state.shopItem.floor,
         type: state.shopItem.type,
         shopItems: state.shopItem.shopItems,
-        message: state.message.message,
-        user: state.auth.user
+        message: state.message.message
     }), shallowEqual)
 
     useEffect(() => {
@@ -74,13 +72,6 @@ const ShopItem = (props) => {
 
     const openHistory = () => {
         props.history.push("/histories/" + id);
-    }
-
-    if (!user) {
-        return <Redirect to="/login" />;
-    }
-    if (user.role === "Admin") {
-        return <Redirect to="/profile" />;
     }
 
     return (

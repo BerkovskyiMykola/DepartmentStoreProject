@@ -2,7 +2,6 @@
 import { useTranslation } from "react-i18next";
 
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { clearMessage } from "../../actions/message";
 import { editUser, getUser } from "../../actions/profile";
 import { validateField, validateRequired } from "../../validation/validation";
@@ -18,10 +17,10 @@ export default function Profile(props) {
 
     const [model, setModel] = useState({ lastname: "", firstname: "" });
 
-    const { profile, user, message } = useSelector(state => ({
+    const { profile, message,user } = useSelector(state => ({
         profile: state.profile.profile,
-        user: state.auth.user,
-        message: state.message.message
+        message: state.message.message,
+        user: state.auth.user
     }), shallowEqual)
 
     useEffect(() => {
@@ -37,10 +36,6 @@ export default function Profile(props) {
                 dispatch(clearMessage());
             })
             .catch(() => { })
-    }
-
-    if (!user) {
-        return <Redirect to="/login" />;
     }
 
     return (

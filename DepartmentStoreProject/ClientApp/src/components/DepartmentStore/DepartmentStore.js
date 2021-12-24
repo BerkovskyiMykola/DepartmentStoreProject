@@ -5,7 +5,6 @@ import { validateAddress, validateField, validateRequired } from '../../validati
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import List from '../ListComponents/List'
-import { Redirect } from 'react-router-dom';
 import { getDepartmentStores, createDepartmentStore, editDepartmentStore, deleteDepartmentStore } from '../../actions/departmentStore';
 import { clearMessage } from '../../actions/message';
 import { useTranslation } from 'react-i18next';
@@ -19,10 +18,9 @@ const DepartmentStore = (props) => {
 
     const dispatch = useDispatch();
 
-    const { departmentStores, message, user } = useSelector(state => ({
+    const { departmentStores, message } = useSelector(state => ({
         departmentStores: state.departmentStore.departmentStores,
-        message: state.message.message,
-        user: state.auth.user
+        message: state.message.message
     }), shallowEqual)
 
     useEffect(() => {
@@ -67,13 +65,6 @@ const DepartmentStore = (props) => {
         setModel(item);
         dispatch(clearMessage());
         setModalEdit(true);
-    }
-
-    if (!user) {
-        return <Redirect to="/login" />;
-    }
-    if (user.role === "Admin") {
-        return <Redirect to="/profile" />;
     }
 
     return (

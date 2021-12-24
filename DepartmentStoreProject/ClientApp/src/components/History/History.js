@@ -2,7 +2,6 @@
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Button, Col, Jumbotron } from "reactstrap";
 import List from '../ListComponents/List'
-import { Redirect } from 'react-router-dom';
 import { getHistories, createHistory } from '../../actions/history';
 import { clearMessage } from '../../actions/message';
 import { useTranslation } from 'react-i18next';
@@ -14,12 +13,11 @@ const History = (props) => {
 
     const dispatch = useDispatch();
 
-    const { type, floor, name, histories, user } = useSelector(state => ({
+    const { type, floor, name, histories } = useSelector(state => ({
         name: state.history.name,
         floor: state.history.floor,
         type: state.history.type,
-        histories: state.history.histories,
-        user: state.auth.user
+        histories: state.history.histories
     }), shallowEqual)
 
     useEffect(() => {
@@ -34,13 +32,6 @@ const History = (props) => {
                 dispatch(clearMessage());
             })
             .catch(() => { })
-    }
-
-    if (!user) {
-        return <Redirect to="/login" />;
-    }
-    if (user.role === "Admin") {
-        return <Redirect to="/profile" />;
     }
 
     return (

@@ -6,7 +6,6 @@ import { validateEmail, validateField, validatePassword, validateRequired } from
 import { Field } from '../FormComponents';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import List from '../ListComponents/List'
-import { Redirect } from 'react-router-dom';
 import { createUser, deleteUser, editUser, getUsers } from '../../actions/user';
 import { clearMessage } from '../../actions/message';
 import datebaseService from '../../services/datebase.service';
@@ -21,10 +20,9 @@ const User = (props) => {
 
     const dispatch = useDispatch();
 
-    const { users, message, user } = useSelector(state => ({
+    const { users, message } = useSelector(state => ({
         users: state.user.users,
-        message: state.message.message,
-        user: state.auth.user
+        message: state.message.message
     }), shallowEqual)
 
     useEffect(() => {
@@ -73,13 +71,6 @@ const User = (props) => {
 
     const restoreDatabase = () => {
         datebaseService.restore().then(() => { alert("Success") }).catch(() => { alert("Error") });
-    }
-
-    if (!user) {
-        return <Redirect to="/login" />;
-    }
-    if (user.role === "User") {
-        return <Redirect to="/profile" />;
     }
 
     return (

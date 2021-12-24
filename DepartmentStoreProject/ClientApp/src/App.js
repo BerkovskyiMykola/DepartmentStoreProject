@@ -13,6 +13,7 @@ import DepartmentStore from "./components/DepartmentStore/DepartmentStore";
 import Shop from "./components/Shop/Shop";
 import ShopItem from "./components/ShopItem/ShopItem";
 import History from "./components/History/History";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 
 import './App.css'
 
@@ -118,12 +119,12 @@ export default function App() {
                         <Route exact path={["/", "/home"]} component={Home} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
-                        <Route exact path="/users" component={User} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/departmentStores" component={DepartmentStore} />
-                        <Route exact path="/shops/:id" component={Shop} />
-                        <Route exact path="/shopItems/:id" component={ShopItem} />
-                        <Route exact path="/histories/:id" component={History} />
+                        <PrivateRoute exact path="/users" component={User} roles={["Admin"]} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
+                        <PrivateRoute exact path="/departmentStores" component={DepartmentStore} roles={["User"]} />
+                        <PrivateRoute exact path="/shops/:id" component={Shop} roles={["User"]} />
+                        <PrivateRoute exact path="/shopItems/:id" component={ShopItem} roles={["User"]} />
+                        <PrivateRoute exact path="/histories/:id" component={History} roles={["User"]} />
                         <Route exact path="/404" component={NotFound} />
                         <Route component={NotFound} />
                     </Switch>
