@@ -19,7 +19,7 @@ const List = ({ recorts, columns, k, deleteRecord, editRecord, openPage, action 
     }
 
     return (
-        <Table style={{ marginTop: '5px' }} dark bordered>
+        <Table style={{ marginTop: '5px', borderCollapse: 'collapse', borderRadius: '0.3em', overflow: 'hidden' }} dark bordered>
             <thead>
                 <tr>
                     <th>#</th>
