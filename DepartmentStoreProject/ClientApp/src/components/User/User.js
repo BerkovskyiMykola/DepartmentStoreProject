@@ -23,8 +23,6 @@ const User = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("User");
-    const [form, setForm] = useState(null);
-    const [checkBtn, setCheckBtn] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -118,8 +116,7 @@ const User = (props) => {
             <List recorts={users} k="userId" columns={['firstname', 'lastname', 'email', 'role']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                textButton={t("Create")} method={createRecord} form={form} message={message}
+                textButton={t("Create")} method={createRecord} message={message}
             >
                 <Field title={t("email")} name="email" value={email}
                     setValue={(e) => { setEmail(e.target.value) }} validations={[validateRequired(t), validateEmail(t)]} />
@@ -139,8 +136,7 @@ const User = (props) => {
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                method={editRecord} message={message} form={form} textButton={t("Edit")}
+                method={editRecord} message={message} textButton={t("Edit")}
             >
                 <p>{t("email")}: {email}</p>
                 <Field title={t("firsname")} name="firstname" value={firstName}

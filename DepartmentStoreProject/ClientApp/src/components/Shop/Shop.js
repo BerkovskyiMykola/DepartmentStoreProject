@@ -16,13 +16,10 @@ const Shop = (props) => {
     const { t } = useTranslation();
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
-
     const [shopId, setShopId] = useState(0);
     const [name, setName] = useState("");
     const [floor, setFloor] = useState(0);
     const [type, setType] = useState("");
-    const [form, setForm] = useState(null);
-    const [checkBtn, setCheckBtn] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -125,8 +122,7 @@ const Shop = (props) => {
             <List recorts={shops} k="shopId" columns={['name', 'floor', 'type']} deleteRecord={deleteRecord} editRecord={getUserValues} openPage={openPage}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                textButton={t("Create")} method={createRecord} form={form} message={message}
+                textButton={t("Create")} method={createRecord} message={message}
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
@@ -137,8 +133,7 @@ const Shop = (props) => {
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                method={editRecord} message={message} form={form} textButton={t("Edit")}
+                method={editRecord} message={message} textButton={t("Edit")}
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />

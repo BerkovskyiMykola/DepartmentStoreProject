@@ -15,8 +15,6 @@ export default function Profile(props) {
     const dispatch = useDispatch();
 
     const [modalEdit, setModalEdit] = useState(false);
-    const [form, setForm] = useState(null);
-    const [checkBtn, setCheckBtn] = useState(null);
 
     const [lastname, setLastname] = useState("");
     const [firstname, setFirstname] = useState("");
@@ -69,8 +67,7 @@ export default function Profile(props) {
                 <strong>{t("role")}:</strong> {profile.role}
             </p>
             <ModalWindow modal={modalEdit} deactiveModal={() => { setModalEdit(false); }} textHeader={t("Edit")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                textButton={t("Edit")} method={editRecord} form={form} message={message}
+                textButton={t("Edit")} method={editRecord} message={message}
             >
                 <Field title={t("lastname")} name="lastname" value={lastname}
                     setValue={(e) => { setLastname(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />

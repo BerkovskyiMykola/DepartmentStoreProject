@@ -21,8 +21,6 @@ const ShopItem = (props) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(1);
     const [amount, setAmount] = useState(1);
-    const [form, setForm] = useState(null);
-    const [checkBtn, setCheckBtn] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -130,8 +128,7 @@ const ShopItem = (props) => {
             <List recorts={shopItems} k="shopItemId" columns={['name', 'price', 'amount']} deleteRecord={deleteRecord} editRecord={getUserValues}/>
 
             <ModalWindow modal={modalAdd} deactiveModal={() => setModalAdd(false)} textHeader={t("Create")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                textButton={t("Create")} method={createRecord} form={form} message={message}
+                textButton={t("Create")} method={createRecord} message={message}
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />
@@ -142,8 +139,7 @@ const ShopItem = (props) => {
             </ModalWindow>
 
             <ModalWindow modal={modalEdit} deactiveModal={() => setModalEdit(false)} textHeader={t("Edit")}
-                setForm={(c) => { setForm(c); }} checkBtn={checkBtn} setCheckBtn={(c) => { setCheckBtn(c); }}
-                method={editRecord} message={message} form={form} textButton={t("Edit")}
+                method={editRecord} message={message} textButton={t("Edit")}
             >
                 <Field title={t("name")} name="name" value={name}
                     setValue={(e) => { setName(e.target.value) }} validations={[validateRequired(t), validateField(t)]} />

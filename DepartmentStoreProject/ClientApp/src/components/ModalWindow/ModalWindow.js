@@ -1,9 +1,13 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { Form } from '../FormComponents';
 
 
-const ModalWindow = ({ modal, deactiveModal, message, form, setForm, checkBtn, setCheckBtn, children, textHeader, textButton, method }) => {
+const ModalWindow = ({ modal, deactiveModal, message, children, textHeader, textButton, method }) => {
+
+    const [form, setForm] = useState(null);
+    const [checkBtn, setCheckBtn] = useState(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 

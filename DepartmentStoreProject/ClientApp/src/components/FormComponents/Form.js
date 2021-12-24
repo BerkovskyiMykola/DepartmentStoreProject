@@ -21,9 +21,7 @@ const FormComponent = ({ setForm, handleSubmit, children, message, setCheckBtn }
             )}
             <CheckButton
                 style={{ display: "none" }}
-                ref={(c) => {
-                    setCheckBtn(c);
-                }}
+                ref={setCheckBtn}
             />
         </Form>
     );
