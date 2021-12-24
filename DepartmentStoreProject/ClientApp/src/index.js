@@ -20,7 +20,7 @@ ReactDOM.render(
             </I18nextProvider>
         </BrowserRouter>
     </Provider>,
-    rootElement);
+rootElement);
 
 registerServiceWorker();
 

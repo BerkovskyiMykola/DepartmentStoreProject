@@ -21,7 +21,7 @@ namespace DepartmentStoreProject.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "User,VIP")]
+        [Authorize(Roles = "User")]
         [HttpGet("all/{id}")]
         public async Task<ActionResult<IEnumerable<History>>> GetHistories(int id)
         {
@@ -49,7 +49,7 @@ namespace DepartmentStoreProject.Controllers
             });
         }
 
-        [Authorize(Roles = "User,VIP")]
+        [Authorize(Roles = "User")]
         [HttpPost("createRandom/{id}")]
         public async Task<IActionResult> PostHistory(int id)
         {

@@ -71,10 +71,10 @@ export default function App() {
                                     {i18n.language.toUpperCase()}
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem onClick={(e) => i18n.changeLanguage("ua")}>
+                                    <DropdownItem onClick={() => i18n.changeLanguage("ua")}>
                                         UA
                                     </DropdownItem>
-                                    <DropdownItem onClick={(e) => i18n.changeLanguage("en")}>
+                                    <DropdownItem onClick={() => i18n.changeLanguage("en")}>
                                         EN
                                     </DropdownItem>
                                 </DropdownMenu>
