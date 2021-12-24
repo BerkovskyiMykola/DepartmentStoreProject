@@ -46,18 +46,6 @@ export default function Profile(props) {
         return <Redirect to="/login" />;
     }
 
-    if (profile === null) {
-        return (
-            <div className="jumbotron bg-dark text-white">
-                <header className="jumbotron">
-                    <h3>
-                        <strong>{t("Profile")}: </strong>
-                    </h3>
-                </header>
-            </div>
-        );
-    }
-
     return (
         <div className="container">
             <header className="jumbotron bg-dark text-white">

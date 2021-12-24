@@ -1,7 +1,12 @@
 ﻿import { EDIT_PROFILE_SUCCESS, GET_PROFILE_INFO_SUCCESS } from "../constants/profile";
 
 const initialState = {
-    profile: null
+    profile: {
+        lastname: "",
+        firstname: "",
+        email: "",
+        role: ""
+    }
 };
 
 export default function (state = initialState, action) {

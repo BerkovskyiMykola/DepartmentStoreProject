@@ -16,7 +16,7 @@ import History from "./components/History/History";
 
 import './App.css'
 
-import { Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, Collapse, NavLink, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, Container } from "reactstrap";
+import { Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, Collapse, NavLink, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from "reactstrap";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
